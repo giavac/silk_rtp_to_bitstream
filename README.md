@@ -10,7 +10,7 @@ gcc silk_rtp_to_bitstream.c -lpcap -o silk_rtp_to_bitstream
 
 USE
 
-./silk_rtp_to_bitstream <input pcap> <output .bit>
+./silk_rtp_to_bitstream input.pcap output.bit
 
 The output .bit file can then be converted into PCM with SILK SDK, e.g.:
 
