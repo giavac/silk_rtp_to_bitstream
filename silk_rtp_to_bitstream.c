@@ -1,8 +1,8 @@
 #include <pcap.h>
 #include <stdio.h>
 
-// 12 B RTP, 8 B UDP, 20 B IP, 14 B Ethernet, 2 B payload length
-#define HEADER_LEN 56
+// 14 B Ethernet, 20 B IP, 8 B UDP, 12 B RTP
+#define HEADER_LEN 54
 
 void dispatcher_handler(u_char*, const struct pcap_pkthdr*, const u_char*);
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
 	// Insert the magic number
 	// 23 21 53 49 4c 4b 5f 56  33
-        long magic_number_length = 9;
+	long magic_number_length = 9;
 	char magic_number[] = "#!SILK_V3";
 	fwrite(magic_number, sizeof(char), magic_number_length, bitOutFile);
 
@@ -61,7 +61,7 @@ void dispatcher_handler(u_char* args, const struct pcap_pkthdr* header, const u_
 	fwrite(&payload_len, sizeof(char), 2, bitOutFile);
 
 	// print payload
-	fwrite(&pkt_data[56], sizeof(char), payload_len, bitOutFile);
+	fwrite(&pkt_data[HEADER_LEN], sizeof(char), payload_len, bitOutFile);
 
 	printf("\n\n");
 }
